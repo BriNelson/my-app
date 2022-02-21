@@ -1,12 +1,13 @@
 <script>
   let fetchPromise = fetchTrivia();
   let catPromise = fetchCategories();
+  
 
   async function fetchCategories() {
     const catResponse = await fetch("https://opentdb.com/api_category.php");
     console.log(catResponse);
     const catRes = await catResponse.json();
-    console.log(catRes.name);
+    // console.log(catRes.name);
     return catRes;
   }
 
@@ -17,18 +18,33 @@
         "&difficulty=" +
         selectedDifficulty
     );
-    console.log(response);
+    
     const res = await response.json();
-    console.log(res.results[0].category);
-    return res;
+let incorrectArray = res.results[0].incorrect_answers
+let correctAnswer = res.results[0].correct_answer
+
+
+
+
+  let answerArray = [...incorrectArray, correctAnswer]
+//   console.log(answerArray)
+	
+	return res;
+    
   }
+
+
+
   let selectedCategory;
   let selectedDifficulty;
   catPromise = fetchCategories();
   function handleClick() {
     fetchPromise = fetchTrivia();
+	console.log(fetchPromise.results)
   }
-  console.log(selectedCategory);
+  
+
+
 </script>
 
 <form on:submit|preventDefault={handleClick}>
@@ -57,21 +73,18 @@
 {#await fetchPromise}
   <p>loading question</p>
 {:then data}
+
   <p>{data.results[0].category}</p>
   {data.results[0].question}
 
   <h3>Answers</h3>
-
   <form>
-    <input type="radio" id="html" name="fav_language" value="HTML" />
-    <label for="html">{data.results[0].correct_answer}</label><br />
-    <input type="radio" id="html" name="fav_language" value="HTML" />
-    <label for="html">{data.results[0].incorrect_answers[0]}</label><br />
-    <input type="radio" id="html" name="fav_language" value="HTML" />
-    <label for="html">{data.results[0].incorrect_answers[1]}</label><br />
-    <input type="radio" id="html" name="fav_language" value="HTML" />
-    <label for="html">{data.results[0].incorrect_answers[2]}</label><br />
-  </form>
+{#each [...data.results[0].incorrect_answers, data.results[0].correct_answer] as datas} <!-- ugly but works -->
+<input type="radio" id="html" name="fav_language" value="HTML" />
+<label for="html">{datas}</label><br />
+{/each}
+</form>
+  
 {:catch error}
   <p>clck button to get trivia question</p>
 {/await}
