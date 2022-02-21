@@ -1,17 +1,17 @@
 <script>
 	
 let fetchPromise = fetchTrivia();
-// let catPromise = fetchCategories();
+let catPromise = fetchCategories();
 
 
 
-// async function fetchCategories(){
-//     const catResponse = await fetch("https://opentdb.com/api_category.php");
-//     console.log(catResponse);
-//     const catRes = await catResponse.json();
-//     console.log(catRes.results[0].category);
-//     return catRes;
-//   }
+async function fetchCategories(){
+    const catResponse = await fetch("https://opentdb.com/api_category.php");
+    console.log(catResponse);
+    const catRes = await catResponse.json();
+    console.log(catRes.name);
+    return catRes;
+  }
 
   
 
@@ -28,13 +28,21 @@ let fetchPromise = fetchTrivia();
 
   function handleClick(){
 	  fetchPromise = fetchTrivia();
-	//   catPromise = fetchCategories();
+	 catPromise = fetchCategories();
   }
 </script>
 
 
 
 <button on:click={handleClick}> get Trivia question </button>
+
+{#await catPromise}
+loading
+{:then data}
+{data.trivia_categories[0].name}
+{:catch error}
+  <p>error</p>
+{/await}
 
 <select name="difficulty" id="difDropdown">
   <option value="volvo">Easy</option>
