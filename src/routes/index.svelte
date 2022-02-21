@@ -60,10 +60,10 @@ loading
 <button> Get Trivia Question </button>
 </form>
 {#await fetchPromise}
-  <p>whatever this is</p>
+  <p>loading question</p>
 {:then data}
   <p>{data.results[0].category}</p>
-  <p>{data.results[0].question}</p>
+  {data.results[0].question}
 
   <h3>Answers</h3>
 
