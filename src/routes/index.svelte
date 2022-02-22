@@ -86,8 +86,9 @@ show = true;
   {#if userAnswer == data.results[0].correct_answer}
   <p>Correct answer</p>
   {/if}
- 
-  <form on:submit|preventDefault={handleAnswerClick}>
+ <!-- on submit I want to find out if my answer is clicked -->
+ <!-- I also want to push to my correct array if correct and incorect if not -->
+  <form on:submit|preventDefault={handleAnswerClick}> 
 {#each [...data.results[0].incorrect_answers, data.results[0].correct_answer] as datas} <!-- ugly but works -->
 <input type="radio" bind:group = {userAnswer} value={datas} />
 <label for="html">{datas}</label><br />
