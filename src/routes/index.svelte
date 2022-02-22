@@ -2,7 +2,9 @@
  let userAnswer = []; 
   let fetchPromise = fetchTrivia();
   let catPromise = fetchCategories();
-  
+  let show = false;
+  let correctUserAnswers = [];
+  let incorrectUserAnswers = [];
 
   async function fetchCategories() {
     const catResponse = await fetch("https://opentdb.com/api_category.php");
@@ -43,13 +45,13 @@
     
     
   function handleAnswerClick() {
-
-    console.log(userAnswer)
+show = true;
+    console.log()
   }
 
 
 </script>
-
+{show}
 <form on:submit|preventDefault={handleClick}>
   {#await catPromise}
     loading
