@@ -1,4 +1,5 @@
 <script>
+ let userAnswer = []; 
   let fetchPromise = fetchTrivia();
   let catPromise = fetchCategories();
   
@@ -20,13 +21,9 @@
     );
     
     const res = await response.json();
-let incorrectArray = res.results[0].incorrect_answers
-let correctAnswer = res.results[0].correct_answer
-
-
-
-
-  let answerArray = [...incorrectArray, correctAnswer]
+// let incorrectArray = res.results[0].incorrect_answers
+// let correctAnswer = res.results[0].correct_answer
+//   let answerArray = [...incorrectArray, correctAnswer]
 //   console.log(answerArray)
 	
 	return res;
@@ -41,8 +38,14 @@ let correctAnswer = res.results[0].correct_answer
   function handleClick() {
     fetchPromise = fetchTrivia();
 	console.log(fetchPromise.results)
-  }
   
+  }
+    
+    
+  function handleAnswerClick() {
+
+    console.log(userAnswer)
+  }
 
 
 </script>
@@ -78,11 +81,17 @@ let correctAnswer = res.results[0].correct_answer
   {data.results[0].question}
 
   <h3>Answers</h3>
-  <form>
+  {#if userAnswer == data.results[0].correct_answer}
+  <p>Correct answer</p>
+  {/if}
+ 
+  <form on:submit|preventDefault={handleAnswerClick}>
 {#each [...data.results[0].incorrect_answers, data.results[0].correct_answer] as datas} <!-- ugly but works -->
-<input type="radio" id="html" name="fav_language" value="HTML" />
+<input type="radio" bind:group = {userAnswer} value={datas} />
 <label for="html">{datas}</label><br />
 {/each}
+
+<button>Submit Answer</button>
 </form>
   
 {:catch error}
@@ -95,3 +104,63 @@ let correctAnswer = res.results[0].correct_answer
 <!-- * As a user I want to be able to select a category for the game. -->
 <!-- * App must be hosted at a live URL -->
 <!-- https://opentdb.com/api_config.php -->
+
+<style>
+    button {
+  appearance: none;
+  background-color: #2ea44f;
+  border: 1px solid rgba(27, 31, 35, .15);
+  border-radius: 6px;
+  box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: -apple-system,system-ui,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  padding: 6px 16px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+button:focus:not(:focus-visible):not(.focus-visible) {
+  box-shadow: none;
+  outline: none;
+}
+
+button:hover {
+  background-color: #2c974b;
+}
+
+button:focus {
+  box-shadow: rgba(46, 164, 79, .4) 0 0 0 3px;
+  outline: none;
+}
+
+button:disabled {
+  background-color: #94d3a2;
+  border-color: rgba(27, 31, 35, .1);
+  color: rgba(255, 255, 255, .8);
+  cursor: default;
+}
+
+button:active {
+  background-color: #298e46;
+  box-shadow: rgba(20, 70, 32, .2) 0 1px 0 inset;
+}
+  
+
+</style>
+
+
+
+
+
