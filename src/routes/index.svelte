@@ -80,7 +80,7 @@ show = true;
 {:then data}
 
   <p>{data.results[0].category}</p>
-  {data.results[0].question}
+  <p>{data.results[0].question}</p>
 
   <h3>Answers</h3>
   {#if userAnswer == data.results[0].correct_answer}
@@ -109,6 +109,21 @@ show = true;
 <!-- https://opentdb.com/api_config.php -->
 
 <style>
+  form, p, h3 {
+    font-family: -apple-system,system-ui,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+  }
+  select {
+    border: 1px solid rgba(27, 31, 35, .15);
+  border-radius: 6px;
+  box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
+  box-sizing: border-box;
+  cursor: pointer;
+  padding: 6px 16px;
+  font-family: -apple-system,system-ui,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+  font-size: 14px;
+  line-height: 20px;
+  line-height: 20px;
+  }
     button {
   appearance: none;
   background-color: #2ea44f;
