@@ -14,6 +14,8 @@
     return catRes;
   }
 
+
+
   async function fetchTrivia() {
     const response = await fetch(
       "https://opentdb.com/api.php?amount=1&category=" +
@@ -32,7 +34,7 @@
     
   }
 
-
+console.log(fetchPromise)
 
   let selectedCategory;
   let selectedDifficulty;
@@ -51,7 +53,7 @@ show = true;
 
 
 </script>
-{show}
+
 <form on:submit|preventDefault={handleClick}>
   {#await catPromise}
     loading
@@ -100,13 +102,6 @@ show = true;
 {:catch error}
   <p>clck button to get trivia question</p>
 {/await}
-<!-- * As a user, I want to be asked trivia questions -->
-<!-- * As a user, I want to be able to answer trivia questions -->
-<!-- * As a user, I want to know how many questions I have answered correctly or wrong. -->
-<!-- * As a user, I want to be able to select a difficulty level. -->
-<!-- * As a user I want to be able to select a category for the game. -->
-<!-- * App must be hosted at a live URL -->
-<!-- https://opentdb.com/api_config.php -->
 
 <style>
   form, p, h3 {
